@@ -5,11 +5,12 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── Bild-Slots: Bild laden, sobald die Datei existiert ── */
-  document.querySelectorAll('.img-slot[data-img]').forEach(function(slot){
+  /* ── Bild-Slots: Hero sofort, alle anderen erst kurz vor dem Viewport ── */
+  function loadSlot(slot){
     var probe = new Image();
     probe.onload = function(){
       var img = document.createElement('img');
+      img.decoding = 'async';
       img.src = slot.dataset.img;
       img.alt = slot.dataset.alt || '';
       slot.appendChild(img);
@@ -24,6 +25,15 @@
       }
     };
     probe.src = slot.dataset.img;
+  }
+  var slotIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){ slotIO.unobserve(en.target); loadSlot(en.target); }
+    });
+  }, { rootMargin: '900px 0px' });
+  document.querySelectorAll('.img-slot[data-img]').forEach(function(slot){
+    if (slot.classList.contains('hero__media')) loadSlot(slot);
+    else slotIO.observe(slot);
   });
 
   /* ── Smooth Scroll (Lenis) ── */
