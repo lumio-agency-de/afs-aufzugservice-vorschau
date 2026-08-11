@@ -1,5 +1,5 @@
 /* afs Nachlinger GmbH — Interaktion
-   Lenis + GSAP (ruhiges Motion-Level), Etagen-Anzeige, Bild-Slots */
+   Natives Scrollen (kein Smooth-Scroll-Hijack), Etagen-Anzeige, Bild-Slots */
 (function(){
   'use strict';
 
@@ -15,14 +15,6 @@
       img.alt = slot.dataset.alt || '';
       slot.appendChild(img);
       slot.classList.add('is-loaded');
-      if (window.ScrollTrigger) ScrollTrigger.refresh();
-      /* Ken-Burns erst, wenn das Hero-Bild wirklich da ist */
-      if (slot.classList.contains('hero__media') && !reduced && window.gsap && window.ScrollTrigger){
-        gsap.to(img, {
-          scale: 1.0, ease: 'none',
-          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-        });
-      }
     };
     probe.src = slot.dataset.img;
   }
@@ -36,31 +28,13 @@
     else slotIO.observe(slot);
   });
 
-  /* ── Smooth Scroll (Lenis) ── */
-  var lenis = null;
-  if (!reduced && window.Lenis){
-    lenis = new Lenis({ duration: 1.1, easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
-    window.lenis = lenis;
-    if (window.gsap && window.ScrollTrigger){
-      gsap.registerPlugin(ScrollTrigger);
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
-      gsap.ticker.lagSmoothing(0);
-    } else {
-      function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-    }
-  } else if (window.gsap && window.ScrollTrigger){
-    gsap.registerPlugin(ScrollTrigger);
-  }
-
-  /* Anker-Links smooth */
+  /* Anker-Links: natives, weiches Springen — das Scrollrad bleibt unangetastet */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var t = document.querySelector(a.getAttribute('href'));
       if (!t) return;
       e.preventDefault();
-      if (lenis) lenis.scrollTo(t); else t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
     });
   });
 

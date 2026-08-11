@@ -156,7 +156,7 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   background:var(--bg-dark); color:var(--ink-light);
 }
 .hero__media.img-slot, .hero__media{ position:absolute; inset:0; z-index:0; overflow:hidden; }
-.hero__media img{ transform:scale(1.08); will-change:transform; }
+.hero__media img{ transform:scale(1.06); }
 .hero__scrim{ position:absolute; inset:0; z-index:1;
   background:
     linear-gradient(to top, rgba(8,24,32,.88) 0%, rgba(8,24,32,.42) 34%, rgba(8,24,32,.10) 60%, rgba(8,24,32,.42) 100%),
@@ -346,5 +346,4 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   .js .reveal{ opacity:1; transform:none; }
   .js .hero__inner .line > span{ transform:none; }
   .js .reveal-img .img-slot img{ clip-path:none; }
-  .hero__media img{ transform:none !important; }
 }
