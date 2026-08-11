@@ -81,8 +81,8 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal, .reveal-img').forEach(function(el){ io.observe(el); });
 
-  /* Hero-Titel: Zeilen nacheinander */
-  document.querySelectorAll('.hero__title .line').forEach(function(line, i){
+  /* Hero: Wortmarke zuerst, dann die Titelzeilen nacheinander */
+  document.querySelectorAll('.hero__inner .line').forEach(function(line, i){
     setTimeout(function(){ line.classList.add('is-in'); }, 250 + i * 140);
   });
 

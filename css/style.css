@@ -13,12 +13,23 @@
   --muted-light:#9db2b7;
   --accent:    #47adc6;   /* beruhigtes Türkis der Altseite (#52bad5) */
   --accent-soft:#7cc6d8;
+  --red:       #ff0004;   /* Marken-Rot des Kunden — exakt aus der Altseite (.hero_header) */
   --line:      rgba(23,43,49,.13);
   --line-light:rgba(230,238,239,.14);
   --display:   "Sora", system-ui, sans-serif;
   --sans:      "Figtree", system-ui, sans-serif;
+  /* Wortmarke: Wunschschrift des Kunden zuerst (falls lokal installiert),
+     dann Gill Sans UltraBold (macOS/iOS — dieselbe Zeichnung), zuletzt der
+     selbst gehostete freie Ersatz Rubik 900. */
+  --mark:      "Humanst521 UBd BT", "Humanist521 UBd BT", "Gill Sans", "Rubik", system-ui, sans-serif;
   --pad:       clamp(1.4rem, 5vw, 6rem);
   --maxw:      1440px;
+}
+
+@font-face{
+  font-family:"Rubik";
+  font-style:normal; font-weight:900; font-display:swap;
+  src:url("fonts/rubik-900-latin.woff2") format("woff2");
 }
 
 *{ margin:0; padding:0; box-sizing:border-box; }
@@ -100,10 +111,11 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   padding-top:.7rem; padding-bottom:.7rem;
   box-shadow:0 1px 0 var(--line-light);
 }
-.nav__brand{ display:flex; align-items:baseline; gap:.5rem; }
+.nav__brand{ display:flex; align-items:baseline; gap:.55rem; }
 .nav__logo{
-  font-family:var(--display); font-weight:700; font-size:1.35rem; letter-spacing:-.02em;
-  color:var(--accent);
+  font-family:var(--mark); font-weight:900; font-size:1.6rem; letter-spacing:0;
+  font-synthesis-weight:none; line-height:1;
+  color:var(--red);
 }
 .nav__name{ font-family:var(--display); font-weight:400; font-size:.85rem; letter-spacing:.04em; opacity:.85; }
 .nav__links{ display:flex; align-items:center; gap:clamp(1rem,2.4vw,2.2rem); }
@@ -112,15 +124,29 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   opacity:.85; transition:opacity .25s ease, color .25s ease;
 }
 .nav__links a:hover{ opacity:1; color:var(--accent-soft); }
+/* Telefon-CTA: gefüllt, damit unmissverständlich ist, dass hier angerufen wird */
 .nav__cta{
-  border:1px solid var(--accent); border-radius:40px;
-  padding:.5rem 1.2rem; color:var(--accent-soft) !important; opacity:1 !important;
-  transition:background .25s ease, color .25s ease;
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--accent); border:1px solid var(--accent); border-radius:40px;
+  padding:.52rem 1.15rem .52rem .95rem;
+  color:#06171d !important; opacity:1 !important;
+  font-size:.9rem; font-weight:700; letter-spacing:.02em; text-transform:none;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+  box-shadow:0 6px 18px rgba(71,173,198,.22);
+  transition:background .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s cubic-bezier(.2,.7,.3,1), transform .16s cubic-bezier(.2,.7,.3,1);
 }
-.nav__cta:hover{ background:var(--accent); color:#06171d !important; }
+.nav__cta svg{ width:15px; height:15px; flex:none; fill:currentColor; }
+.nav__cta:hover{
+  background:var(--accent-soft); border-color:var(--accent-soft); color:#06171d !important;
+  box-shadow:0 9px 26px rgba(71,173,198,.34);
+}
+.nav__cta:active{ transform:scale(.97); }
 @media (max-width: 720px){
   .nav__name{ display:none; }
   .nav__links a:not(.nav__cta){ display:none; }
+}
+@media (max-width: 420px){
+  .nav__cta{ font-size:.82rem; padding:.48rem .9rem .48rem .78rem; gap:.4rem; }
 }
 
 /* ── Hero ────────────────────────────────────────────────── */
@@ -142,20 +168,27 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   max-width:var(--maxw); margin:0 auto;
   padding:0 var(--pad) clamp(2.4rem,6vh,4.5rem);
 }
-.hero__eyebrow{
-  font-family:var(--display); font-size:.78rem; font-weight:600;
-  text-transform:uppercase; letter-spacing:.32em; color:var(--accent-soft);
-  margin-bottom:1.4rem;
+/* Wortmarke im Hero — der Eyecatcher */
+.hero__brand{ margin-bottom:clamp(.9rem, 2.4vh, 1.9rem); }
+.hero__mark{
+  font-family:var(--mark); font-weight:900; font-synthesis-weight:none;
+  font-size:clamp(3.6rem, 9.5vw, 7.6rem); line-height:.9; letter-spacing:.005em;
+  color:var(--red);
+}
+.hero__brandname{
+  font-family:var(--display); font-size:clamp(.72rem, 1.5vw, .95rem); font-weight:500;
+  text-transform:uppercase; letter-spacing:.3em; color:var(--ink-light);
+  padding-top:.75rem;
 }
 .hero__title{
-  font-size:clamp(2.9rem, 9.5vw, 8.2rem);
-  font-weight:700; line-height:.98; letter-spacing:-.03em;
+  font-size:clamp(2.2rem, 6.4vw, 5.4rem);
+  font-weight:700; line-height:1.02; letter-spacing:-.03em;
   margin-bottom:1.8rem;
 }
-.hero__title .line{ display:block; overflow:hidden; }
-.hero__title .line > span{ display:block; will-change:transform; transition:transform 1.15s cubic-bezier(.16,1,.3,1); }
-.js .hero__title .line > span{ transform:translateY(112%); }
-.hero__title .line.is-in > span{ transform:translateY(0); }
+.hero__inner .line{ display:block; overflow:hidden; }
+.hero__inner .line > span{ display:block; will-change:transform; transition:transform 1.15s cubic-bezier(.16,1,.3,1); }
+.js .hero__inner .line > span{ transform:translateY(112%); }
+.hero__inner .line.is-in > span{ transform:translateY(0); }
 .hero__foot{
   display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap;
   border-top:1px solid var(--line-light); padding-top:1.6rem;
@@ -311,7 +344,7 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   *{ animation:none !important; transition:none !important; }
   html{ scroll-behavior:auto; }
   .js .reveal{ opacity:1; transform:none; }
-  .js .hero__title .line > span{ transform:none; }
+  .js .hero__inner .line > span{ transform:none; }
   .js .reveal-img .img-slot img{ clip-path:none; }
   .hero__media img{ transform:none !important; }
 }
