@@ -26,6 +26,17 @@
   --maxw:      1440px;
 }
 
+/* Schriften selbst gehostet — keine Verbindung zu Google beim Seitenaufruf */
+@font-face{
+  font-family:"Sora";
+  font-style:normal; font-weight:100 800; font-display:swap;
+  src:url("fonts/sora-var-latin.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Figtree";
+  font-style:normal; font-weight:300 900; font-display:swap;
+  src:url("fonts/figtree-var-latin.woff2") format("woff2");
+}
 @font-face{
   font-family:"Rubik";
   font-style:normal; font-weight:900; font-display:swap;
@@ -453,9 +464,29 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
 
 /* ── Rechtstexte ─────────────────────────────────────────── */
 .legal{ padding:clamp(8rem,18vh,12rem) 0 clamp(4rem,10vh,7rem); }
-.legal h1{ font-size:clamp(2rem,4.6vw,3.4rem); margin-bottom:2rem; }
+.legal h1{ font-size:clamp(2rem,4.6vw,3.4rem); margin-bottom:.6rem; }
+.legal__intro{ max-width:46rem; color:var(--muted); margin-bottom:3rem; }
+.legal h2{
+  font-size:clamp(1.25rem,2.2vw,1.6rem); margin:2.8rem 0 1rem;
+  padding-top:1.6rem; border-top:1px solid var(--line);
+}
+.legal h3{
+  font-family:var(--display); font-size:.82rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:.16em; color:var(--accent);
+  margin:1.8rem 0 .6rem;
+}
 .legal p{ max-width:46rem; color:var(--muted); margin-bottom:1.2rem; }
+.legal address{ font-style:normal; max-width:46rem; color:var(--muted); margin-bottom:1.2rem; }
+.legal ul{ max-width:46rem; color:var(--muted); margin:0 0 1.2rem 1.1rem; }
+.legal li{ margin-bottom:.4rem; }
 .legal a{ color:var(--accent); }
+.legal strong{ color:var(--ink); font-weight:600; }
+/* Sichtbare Markierung fehlender Pflichtangaben — vor Livegang zu füllen */
+.legal__todo{
+  display:block; max-width:46rem; margin:0 0 1.2rem;
+  border-left:3px solid var(--red); background:rgba(255,0,4,.05);
+  padding:.8rem 1.1rem; color:var(--ink); font-size:.95rem;
+}
 
 /* ── Reveals ─────────────────────────────────────────────── */
 .reveal{ transition:opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }

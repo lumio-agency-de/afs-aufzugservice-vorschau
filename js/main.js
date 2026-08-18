@@ -44,8 +44,11 @@
 
   /* ── Nav-Zustand ── */
   var nav = document.querySelector('[data-nav]');
+  /* Seiten ohne dunklen Kopfbereich (Impressum, Datenschutz) tragen data-solid:
+     dort bleibt die Leiste dauerhaft dunkel, sonst steht helle Schrift auf Hell. */
+  var navSolid = nav.hasAttribute('data-solid');
   function onScrollNav(){
-    if (window.scrollY > 40) nav.classList.add('is-scrolled');
+    if (navSolid || window.scrollY > 40) nav.classList.add('is-scrolled');
     else nav.classList.remove('is-scrolled');
   }
   window.addEventListener('scroll', onScrollNav, { passive: true });
