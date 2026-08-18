@@ -360,8 +360,11 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
   display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:clamp(2rem,5vw,4rem);
   padding-bottom:clamp(2.5rem,6vh,4rem);
 }
-.footer__logo{ font-family:var(--display); font-weight:700; font-size:1.7rem; color:var(--accent); }
-.footer__logo span{ font-weight:400; font-size:1.05rem; color:var(--ink-light); }
+.footer__logo{
+  font-family:var(--mark); font-weight:900; font-synthesis-weight:none;
+  font-size:1.8rem; line-height:1; letter-spacing:0; color:var(--red);
+}
+.footer__logo span{ font-family:var(--display); font-weight:400; font-size:1.05rem; letter-spacing:.02em; color:var(--ink-light); }
 .footer__tag{
   font-family:var(--display); font-size:.72rem; font-weight:600;
   text-transform:uppercase; letter-spacing:.28em; color:var(--muted-light);
