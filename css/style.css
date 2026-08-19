@@ -324,6 +324,22 @@ body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:n
 .img-slot.is-loaded::before{ display:none; }
 .img-slot img{ position:absolute; inset:0; }
 
+/* KI-Kennzeichnung (EU AI Act, Art. 50) — dezent, aber sichtbar am Bild */
+.ki-badge{
+  position:absolute; z-index:3; right:.7rem; bottom:.7rem;
+  font-family:var(--display); font-size:.6rem; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent);
+  background:rgba(8,24,32,.38);
+  border:1px solid rgba(71,173,198,.32);
+  border-radius:3px; padding:.18rem .42rem; line-height:1;
+  opacity:.72; pointer-events:none;
+  backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+}
+/* Im Hero sitzt unten rechts schon der Scroll-Hinweis — dort nach oben ausweichen */
+.hero__media .ki-badge{ top:5.4rem; bottom:auto; right:clamp(1rem,3vw,2.4rem); }
+.about__media .ki-badge{ right:clamp(1rem,3vw,2.4rem); bottom:1.2rem; }
+
 /* Bild-Reveal: clip auf img, beobachtet wird der Container */
 .reveal-img .img-slot img{ transition:clip-path 1.2s cubic-bezier(.16,1,.3,1); }
 .js .reveal-img .img-slot img{ clip-path:inset(0 0 100% 0); }
